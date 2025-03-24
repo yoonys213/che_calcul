@@ -54,7 +54,7 @@ body {
 
 /* 색상이 퍼지는 효과 */
 .overlay {
-    position: absolute;
+    position: fixed; /* 화면에 고정 */
     width: 0;
     height: 0;
     background-color: #6b9dff;
@@ -66,8 +66,8 @@ body {
 
 /* 색상이 화면 전체로 퍼지는 애니메이션 */
 .overlay.active {
-    width: 200vw;
-    height: 200vh;
+    width: 200vmax; /* 화면의 최대 크기 기준으로 설정 */
+    height: 200vmax;
 }
 
 /* 뒤로가기 버튼 스타일 */
