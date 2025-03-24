@@ -1,57 +1,113 @@
-function openNewPage(event, url, buttonId) {
-    event.preventDefault(); // 기본 동작 방지
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 창</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+            overflow: hidden; /* 화면 전환 시 스크롤 방지 */
+            position: relative; /* 색상 퍼지는 효과를 위한 기준점 */
+        }
 
-    // 클릭한 버튼의 위치 계산
-    const button = document.getElementById(buttonId);
-    const rect = button.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2; // 버튼의 가운데 X 좌표
-    const centerY = rect.top + rect.height / 2; // 버튼의 가운데 Y 좌표
+        /* 버튼 컨테이너 스타일 */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 1; /* 버튼 컨테이너를 색상 퍼지는 효과 위로 올림 */
+        }
 
-    // 오버레이 위치 설정
-    const overlay = document.getElementById('overlay');
-    overlay.style.left = `${centerX}px`;
-    overlay.style.top = `${centerY}px`;
+        /* 버튼 스타일 */
+        .button {
+            width: 200px;
+            height: 50px;
+            background-color: #6b9dff;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 0;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 2; /* 버튼 텍스트를 색상 퍼지는 효과 위로 올림 */
+        }
 
-    // 모든 버튼의 텍스트 숨기기
-    const buttons = document.querySelectorAll('.button');
-    buttons.forEach(button => {
-        button.classList.add('hide-text');
-    });
+        /* 버튼 텍스트 숨기기 */
+        .button.hide-text {
+            color: transparent; /* 텍스트를 투명하게 만듦 */
+        }
 
-    // 선택된 버튼의 텍스트만 보이게 하기
-    button.classList.remove('hide-text');
+        /* 색상이 퍼지는 효과 */
+        .overlay {
+            position: absolute;
+            width: 0;
+            height: 0;
+            background-color: #6b9dff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 1s ease, height 1s ease;
+            z-index: 0; /* 버튼 컨테이너 아래로 배치 */
+        }
 
-    // 오버레이 활성화
-    overlay.classList.add('active');
+        /* 색상이 화면 전체로 퍼지는 애니메이션 */
+        .overlay.active {
+            width: 200vw;
+            height: 200vh;
+        }
+    </style>
+</head>
+<body>
+    <!-- 색상이 퍼지는 효과를 위한 오버레이 -->
+    <div class="overlay" id="overlay"></div>
 
-    // 1초 후에 새 페이지로 이동
-    setTimeout(() => {
-        window.location.href = url; // 현재 창에서 새 페이지로 이동
-    }, 1000); // 애니메이션 시간과 동일하게 설정
-}
+    <!-- 버튼 컨테이너 -->
+    <div class="button-container">
+        <button class="button" id="button1" onclick="openNewPage('content1.html', this)">불확도 계산기</button>
+        <button class="button" id="button2" onclick="openNewPage('content2.html', this)">불확도</button>
+        <button class="button" id="button3" onclick="openNewPage('content3.html', this)">불확도란?</button>
+    </div>
 
-// 뒤로가기 기능
-function goBack(event) {
-    event.preventDefault(); // 기본 동작 방지
-
-    // 오버레이 비활성화
-    const overlay = document.getElementById('overlay');
-    overlay.classList.remove('active');
-
-    // 1초 후에 index.html로 이동
-    setTimeout(() => {
-        window.location.href = 'index.html'; // index.html로 이동
-
-        // F5 키를 시뮬레이션하여 새로고침
-        setTimeout(() => {
-            const f5Event = new KeyboardEvent('keydown', {
-                key: 'F5', // F5 키
-                code: 'F5',
-                keyCode: 116, // F5 키 코드
-                which: 116,
-                bubbles: true,
+    <script>
+        function openNewPage(url, button) {
+            // 모든 버튼의 텍스트 숨기기
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(btn => {
+                if (btn !== button) {
+                    btn.classList.add('hide-text');
+                }
             });
-            window.dispatchEvent(f5Event); // F5 키 이벤트 발생
-        }, 100); // index.html로 이동한 후 0.1초 뒤 F5 키 실행
-    }, 1000); // 애니메이션 시간과 동일하게 설정
-}
+
+            // 오버레이 위치를 클릭한 버튼의 위치로 설정
+            const overlay = document.getElementById('overlay');
+            const rect = button.getBoundingClientRect();
+            overlay.style.left = `${rect.left + rect.width / 2}px`;
+            overlay.style.top = `${rect.top + rect.height / 2}px`;
+
+            // 오버레이 활성화
+            overlay.classList.add('active');
+
+            // 1초 후에 새 페이지로 이동
+            setTimeout(() => {
+                window.location.href = url; // 현재 창에서 새 페이지로 이동
+            }, 1000); // 애니메이션 시간과 동일하게 설정
+        }
+    </script>
+</body>
+</html>
