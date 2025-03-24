@@ -29,9 +29,10 @@ function openNewPage(event, url, buttonId) {
         overlay.classList.add('active');
     }, 10); // 약간의 지연을 두어 애니메이션 시작
 
-    // 1초 후에 새 페이지로 이동
+    // 1초 후에 새 페이지로 이동 및 오버레이 제거
     setTimeout(() => {
         window.location.href = url; // 현재 창에서 새 페이지로 이동
+        overlay.remove(); // 오버레이 제거
     }, 1000); // 애니메이션 시간과 동일하게 설정
 }
 
