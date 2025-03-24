@@ -1,22 +1,57 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인 창</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <!-- 색상이 퍼지는 효과를 위한 오버레이 -->
-    <div class="overlay" id="overlay"></div>
+function openNewPage(event, url, buttonId) {
+    event.preventDefault(); // 기본 동작 방지
 
-    <!-- 버튼 컨테이너 -->
-    <div class="button-container">
-        <button class="button" id="button1" onclick="openNewPage(event, 'content1.html', 'button1')">불확도 계산기</button>
-        <button class="button" id="button2" onclick="openNewPage(event, 'content2.html', 'button2')">불확도</button>
-        <button class="button" id="button3" onclick="openNewPage(event, 'content3.html', 'button3')">불확도란?</button>
-    </div>
+    // 클릭한 버튼의 위치 계산
+    const button = document.getElementById(buttonId);
+    const rect = button.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2; // 버튼의 가운데 X 좌표
+    const centerY = rect.top + rect.height / 2; // 버튼의 가운데 Y 좌표
 
-    <script src="js/script.js"></script>
-</body>
-</html>
+    // 오버레이 위치 설정
+    const overlay = document.getElementById('overlay');
+    overlay.style.left = `${centerX}px`;
+    overlay.style.top = `${centerY}px`;
+
+    // 모든 버튼의 텍스트 숨기기
+    const buttons = document.querySelectorAll('.button');
+    buttons.forEach(button => {
+        button.classList.add('hide-text');
+    });
+
+    // 선택된 버튼의 텍스트만 보이게 하기
+    button.classList.remove('hide-text');
+
+    // 오버레이 활성화
+    overlay.classList.add('active');
+
+    // 1초 후에 새 페이지로 이동
+    setTimeout(() => {
+        window.location.href = url; // 현재 창에서 새 페이지로 이동
+    }, 1000); // 애니메이션 시간과 동일하게 설정
+}
+
+// 뒤로가기 기능
+function goBack(event) {
+    event.preventDefault(); // 기본 동작 방지
+
+    // 오버레이 비활성화
+    const overlay = document.getElementById('overlay');
+    overlay.classList.remove('active');
+
+    // 1초 후에 index.html로 이동
+    setTimeout(() => {
+        window.location.href = 'index.html'; // index.html로 이동
+
+        // F5 키를 시뮬레이션하여 새로고침
+        setTimeout(() => {
+            const f5Event = new KeyboardEvent('keydown', {
+                key: 'F5', // F5 키
+                code: 'F5',
+                keyCode: 116, // F5 키 코드
+                which: 116,
+                bubbles: true,
+            });
+            window.dispatchEvent(f5Event); // F5 키 이벤트 발생
+        }, 100); // index.html로 이동한 후 0.1초 뒤 F5 키 실행
+    }, 1000); // 애니메이션 시간과 동일하게 설정
+}
