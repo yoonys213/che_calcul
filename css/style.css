@@ -1,11 +1,16 @@
 /* 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     color: #333;
@@ -81,4 +86,33 @@ body {
 
 .back-button:hover {
     background-color: #5a8be6;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .button {
+        width: 150px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .back-button {
+        width: 120px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .button {
+        width: 120px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    .back-button {
+        width: 100px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
 }
