@@ -34,13 +34,18 @@ function openNewPage(event, url, buttonId) {
 function goBack(event) {
     event.preventDefault(); // 기본 동작 방지
 
-    // 오버레이 비활성화
+    // 오버레이 비활성화 및 리셋
     const overlay = document.getElementById('overlay');
     overlay.classList.remove('active');
 
-    // 1초 후에 현재 창을 닫고 index.html 열기
+    // 오버레이 크기와 위치 리셋
     setTimeout(() => {
-        window.open('index.html', '_self'); // 현재 창에서 index.html 열기
-        window.close(); // 현재 창 닫기
+        overlay.style.width = '0';
+        overlay.style.height = '0';
+    }, 1000); // 애니메이션 시간과 동일하게 설정
+
+    // 1초 후에 index.html로 이동
+    setTimeout(() => {
+        window.location.href = 'index.html'; // index.html로 이동
     }, 1000); // 애니메이션 시간과 동일하게 설정
 }
