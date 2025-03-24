@@ -33,7 +33,7 @@ function openNewPage(event, url, buttonId) {
     setTimeout(() => {
         window.location.href = url; // 현재 창에서 새 페이지로 이동
         overlay.remove(); // 오버레이 제거
-    }, 1000); // 애니메이션 시간과 동일하게 설정
+    }, 1200); // 애니메이션 시간과 동일하게 설정
 }
 
 // 뒤로가기 기능
