@@ -46,9 +46,10 @@ function goBack(event) {
         overlay.remove(); // 오버레이 완전히 제거
     }
 
-    // 1초 후에 index.html로 이동 (캐시 무시)
+    // 1초 후에 현재 창을 닫고 지정된 사이트 열기
     setTimeout(() => {
-        window.location.href = 'index.html?t=' + new Date().getTime(); // 캐시 무시
+        window.open('https://yoonys213.github.io/che_calcul/', '_blank'); // 새 창에서 사이트 열기
+        window.close(); // 현재 창 닫기
     }, 1000); // 애니메이션 시간과 동일하게 설정
 }
 
