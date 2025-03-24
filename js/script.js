@@ -1,6 +1,4 @@
 function openNewPage(event, url, buttonId) {
-    event.preventDefault(); // 기본 동작 방지
-
     // 클릭한 버튼의 위치 계산
     const button = document.getElementById(buttonId);
     const rect = button.getBoundingClientRect();
@@ -30,17 +28,6 @@ function openNewPage(event, url, buttonId) {
     }, 1000); // 애니메이션 시간과 동일하게 설정
 }
 
-// 뒤로가기 기능
-function goBack(event) {
-    event.preventDefault(); // 기본 동작 방지
-
-    // 오버레이 비활성화
-    const overlay = document.getElementById('overlay');
-    overlay.classList.remove('active');
-
-    // 1초 후에 index.html로 이동한 뒤 새로고침
-    setTimeout(() => {
-        window.location.href = 'index.html'; // index.html로 이동
-        window.location.reload(); // 새로고침
-    }, 1000); // 애니메이션 시간과 동일하게 설정
+function goBack() {
+    window.history.back(); // 이전 페이지로 이동
 }
