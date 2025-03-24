@@ -46,8 +46,8 @@ function goBack(event) {
         overlay.remove(); // 오버레이 완전히 제거
     }
 
-    // 1초 후에 index.html로 이동
+    // 1초 후에 index.html로 이동 (캐시 무시)
     setTimeout(() => {
-        window.location.href = 'index.html'; // index.html로 이동
+        window.location.href = 'index.html?t=' + new Date().getTime(); // 캐시 무시
     }, 1000); // 애니메이션 시간과 동일하게 설정
 }
