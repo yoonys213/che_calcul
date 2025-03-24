@@ -51,3 +51,11 @@ function goBack(event) {
         window.location.href = 'index.html?t=' + new Date().getTime(); // 캐시 무시
     }, 1000); // 애니메이션 시간과 동일하게 설정
 }
+
+// 페이지 로드 시 뒤로가기 버튼 이벤트 리스너 추가
+window.addEventListener('load', function () {
+    const backButton = document.querySelector('.back-button');
+    if (backButton) {
+        backButton.addEventListener('click', goBack);
+    }
+});
